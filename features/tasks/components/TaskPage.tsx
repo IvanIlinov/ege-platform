@@ -6,6 +6,7 @@ export function TaskPage({ task }: { task: Task }) {
   return (
     <div className="max-w-3xl mx-auto p-4">
       <div className="exam-panel relative overflow-hidden rounded-[32px] p-5 md:p-8">
+        {/* Заголовки */}
         <header className="relative flex items-start justify-between mb-6 gap-4">
           <div>
             <p
@@ -34,10 +35,10 @@ export function TaskPage({ task }: { task: Task }) {
             ))}
           </div>
         </header>
-
+        {/* Основа */}
         <TaskSlider task={task} />
       </div>
-
+      {/* Навигация */}
       <TaskNav />
     </div>
   );

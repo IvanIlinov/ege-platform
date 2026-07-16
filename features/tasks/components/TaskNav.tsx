@@ -18,7 +18,8 @@ export function TaskNav() {
     }
 
     return (
-        <div className="fixed left-4 bottom-4 md:bottom-auto md:top-4 z-50">
+        <div className="fixed left-4 bottom-4 md:bottom-auto md:top-4 z-[100]">
+            {/* Открытие шара */}
             {isOpen && (
                 <div
                     className="
@@ -35,7 +36,7 @@ export function TaskNav() {
                                     key={id}
                                     onClick={() => handleSelect(id)}
                                     className={`
-                                                w-9 h-9 rounded-full text-sm font-medium transition-colors
+                                                w-9 h-9 rounded-full text-sm font-medium transition-colors touch-manipulation
                                                 ${isActive
                                             ? "text-black"
                                             : "bg-white/5 text-white/70 hover:bg-white/10"
@@ -53,11 +54,11 @@ export function TaskNav() {
                     </div>
                 </div>
             )}
-
+            {/* Шар */}
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="w-12 h-12 rounded-full bg-black/70 backdrop-blur-xl border border-white/10 text-white 
-                           flex items-center justify-center shadow-lg shadow-black/30 animate-pulse"
+                className="w-12 h-12 rounded-full bg-black/70 backdrop-blur-xl border border-white/10 
+                text-white flex items-center justify-center shadow-lg shadow-black/30 animate-pulse touch-manipulation"
             >
                 <span
                     className="text-xs font-bold"
