@@ -5,15 +5,43 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/*BG  */
 body {
   background: #0c0c10;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--signal) 10%, transparent), transparent 45%),
+    radial-gradient(circle at 80% 80%, color-mix(in srgb, var(--signal) 7%, transparent), transparent 45%);
+  animation: breathe 12s ease-in-out infinite;
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    background-position: 0% 0%, 100% 100%;
+    opacity: 0.7;
+  }
+
+  50% {
+    background-position: 15% 10%, 85% 90%;
+    opacity: 1;
+  }
 }
 
 /* DESIGN SYSTEM */
 :root {
-  --signal: #39FF14;
+  --signal: #F0F0F0;
 
 }
 
