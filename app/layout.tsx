@@ -33,7 +33,8 @@ export default function RootLayout({
         <div className="flex-1 pb-24 md:pt-20 md:pb-0">
           {children}
         </div>
-        <BottomNav/>  
+        {/* Шар + Меню */}
+        <BottomNav />
       </body>
     </html>
   );
