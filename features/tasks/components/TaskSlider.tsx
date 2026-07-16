@@ -22,6 +22,34 @@ export function TaskSlider({ task }: { task: Task }) {
 
     return (
         <div className="relative rounded-3xl">
+            {/* Боковая панель — влево, к видео */}
+            {slide === "practice" && (
+                <button
+                    onClick={() => setSlide("video")}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10
+                        flex items-center justify-center w-8 h-14 rounded-full
+                        bg-white/10 hover:bg-white/15 border border-white/15
+                        backdrop-blur-xl text-white transition-colors touch-manipulation"
+                    style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}
+                >
+                    <ChevronLeft size={18} />
+                </button>
+            )}
+
+            {/* Боковая панель — вправо, к практике */}
+            {slide === "video" && (
+                <button
+                    onClick={() => setSlide("practice")}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10
+                        flex items-center justify-center w-8 h-14 rounded-full
+                        bg-white/10 hover:bg-white/15 border border-white/15
+                        backdrop-blur-xl text-white transition-colors touch-manipulation"
+                    style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}
+                >
+                    <ChevronRight size={18} />
+                </button>
+            )}
+
             <div className="overflow-hidden rounded-3xl">
                 <div
                     className="flex transition-transform duration-500 ease-out"
@@ -47,16 +75,6 @@ export function TaskSlider({ task }: { task: Task }) {
                                     </span>
                                 </div>
                             )}
-
-                            <button
-                                onClick={() => setSlide("practice")}
-                                className="mt-4 self-end flex items-center gap-2 rounded-full bg-white/10 
-                                    hover:bg-white/15 border border-white/10 px-4 py-2 text-sm text-white 
-                                    transition-colors touch-manipulation"
-                            >
-                                К практике
-                                <ChevronRight size={16} />
-                            </button>
                         </div>
                     </div>
 
@@ -95,17 +113,7 @@ export function TaskSlider({ task }: { task: Task }) {
                                 {activeTask.condition}
                             </p>
 
-                            <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
-
-                                <button
-                                    onClick={() => setSlide("video")}
-                                    className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/15 
-                                        border border-white/10 py-2 px-4 text-sm text-white transition-colors 
-                                        touch-manipulation shrink-0 h-10"
-                                >
-                                    <ChevronLeft size={16} />
-                                    К видео
-                                </button>
+                            <div className="mt-4 flex items-center justify-center">
 
                                 {/* Трек-подложка — эффект утопленного паза */}
                                 <div
