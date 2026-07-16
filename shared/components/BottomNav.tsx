@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { BookOpen, ListChecks, LayoutGrid } from "lucide-react";
 
 const links = [
-  { href: "/lessons", label: "Уроки", icon: BookOpen },
+  // { href: "/lessons", label: "Уроки", icon: BookOpen },
   { href: "/tasks", label: "Задания", icon: ListChecks },
-  { href: "/variants", label: "Варианты", icon: LayoutGrid },
+  // { href: "/variants", label: "Варианты", icon: LayoutGrid },
 ];
 
 export function BottomNav() {
