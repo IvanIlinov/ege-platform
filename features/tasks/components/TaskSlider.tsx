@@ -10,6 +10,7 @@ export function TaskSlider({ task }: { task: Task }) {
     const [revealed, setRevealed] = useState<Set<number>>(new Set());
 
     const activeTask = task.tasks[activeIndex];
+    const isRevealed = revealed.has(activeIndex);
 
     function toggleReveal(index: number) {
         setRevealed((prev) => {
@@ -71,7 +72,7 @@ export function TaskSlider({ task }: { task: Task }) {
                                                 key={item.id}
                                                 onClick={() => setActiveIndex(i)}
                                                 className={`h-8 w-8 rounded-full text-xs font-semibold border transition-colors ${isActive
-                                                    ? "border-[#4FC3F7] text-black"  // убрали bg из класса
+                                                    ? "border-[#4FC3F7] text-black"
                                                     : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
                                                     }`}
                                                 style={isActive ? {
@@ -93,25 +94,8 @@ export function TaskSlider({ task }: { task: Task }) {
                             >
                                 {activeTask.condition}
                             </p>
-                            <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
-                                <div className="flex items-center gap-3 flex-wrap">
-                                    <button
-                                        onClick={() => toggleReveal(activeIndex)}
-                                        className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm text-white transition-colors touch-manipulation"
-                                    >
-                                        <Eye size={16} />
-                                        {revealed.has(activeIndex) ? "Скрыть ответ" : "Показать ответ"}
-                                    </button>
 
-                                    {revealed.has(activeIndex) && (
-                                        <span
-                                            className="text-[var(--signal)] font-semibold"
-                                            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                                        >
-                                            {activeTask.correctAnswer.join(", ")}
-                                        </span>
-                                    )}
-                                </div>
+                            <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
 
                                 <button
                                     onClick={() => setSlide("video")}
@@ -122,6 +106,56 @@ export function TaskSlider({ task }: { task: Task }) {
                                     <ChevronLeft size={16} />
                                     К видео
                                 </button>
+
+                                {/* Трек-подложка — эффект утопленного паза */}
+                                <div
+                                    className="relative flex items-center rounded-full p-1"
+                                    style={{
+                                        background: "rgba(0, 0, 0, 0.25)",
+                                        boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.03)",
+                                        gap: isRevealed ? "4px" : "0px",
+                                        transition: "gap 0.45s cubic-bezier(0.65, 0, 0.35, 1)",
+                                    }}
+                                >
+                                    <button
+                                        onClick={() => toggleReveal(activeIndex)}
+                                        className="flex items-center rounded-full py-2 px-3.5 text-sm text-white touch-manipulation overflow-hidden"
+                                        style={{
+                                            background: isRevealed
+                                                ? "rgba(255, 255, 255, 0.14)"
+                                                : "rgba(255, 255, 255, 0.1)",
+                                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset",
+                                            transition: "background 0.45s cubic-bezier(0.65, 0, 0.35, 1)",
+                                        }}
+                                    >
+                                        <Eye size={16} className="shrink-0" />
+                                        <span
+                                            className="overflow-hidden whitespace-nowrap"
+                                            style={{
+                                                maxWidth: isRevealed ? "0px" : "110px",
+                                                opacity: isRevealed ? 0 : 1,
+                                                marginLeft: isRevealed ? "0px" : "8px",
+                                                transition: "all 0.45s cubic-bezier(0.65, 0, 0.35, 1)",
+                                            }}
+                                        >
+                                            Показать ответ
+                                        </span>
+                                    </button>
+
+                                    <span
+                                        className="overflow-hidden font-semibold pr-3 whitespace-nowrap"
+                                        style={{
+                                            fontFamily: "var(--font-jetbrains-mono)",
+                                            color: "var(--signal)",
+                                            maxWidth: isRevealed ? "200px" : "0px",
+                                            opacity: isRevealed ? 1 : 0,
+                                            transition: "all 0.45s cubic-bezier(0.65, 0, 0.35, 1)",
+                                        }}
+                                    >
+                                        {activeTask.correctAnswer.join(", ")}
+                                    </span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
