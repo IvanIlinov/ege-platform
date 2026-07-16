@@ -14,12 +14,14 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="
-      fixed bottom-4 left-1/2 -translate-x-1/2
-      bg-black rounded-2xl px-2 py-2
-      flex gap-1
-      md:top-4 md:bottom-auto
-    ">
+    <nav
+      className="
+        fixed bottom-4 left-1/2 -translate-x-1/2
+        md:top-4 md:bottom-auto
+        flex gap-1 rounded-2xl p-2 z-50
+        bg-black/70 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/30
+  "
+>
       {links.map(({ href, label, icon: Icon }) => {
         const isActive = pathname.startsWith(href);
 
