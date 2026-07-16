@@ -35,17 +35,20 @@ export function TaskNav() {
                                 <button
                                     key={id}
                                     onClick={() => handleSelect(id)}
-                                    className={`
-                                                w-9 h-9 rounded-full text-sm font-medium transition-colors touch-manipulation
-                                                ${isActive
-                                            ? "text-black"
-                                            : "bg-white/5 text-white/70 hover:bg-white/10"
-                                        }
-                                            `}
+                                    className="w-9 h-9 rounded-full text-sm font-medium transition-colors touch-manipulation"
                                     style={isActive ? {
-                                        backgroundColor: "var(--signal)",
+                                        borderColor: "var(--signal)",
+                                        color: "var(--signal)",
+                                        boxShadow: "0 0 0 1px var(--signal), 0 0 20px -4px var(--signal)",
+                                        background: "rgba(255, 255, 255, 0.03)",
+                                        border: "1px solid var(--signal)",
                                         fontFamily: "var(--font-jetbrains-mono)"
-                                    } : { fontFamily: "var(--font-jetbrains-mono)" }}
+                                    } : {
+                                        background: "rgba(255, 255, 255, 0.05)",
+                                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                                        color: "rgba(255, 255, 255, 0.6)",
+                                        fontFamily: "var(--font-jetbrains-mono)"
+                                    }}
                                 >
                                     {id}
                                 </button>
@@ -57,12 +60,20 @@ export function TaskNav() {
             {/* Шар */}
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="w-12 h-12 rounded-full bg-black/70 backdrop-blur-xl border border-white/10 
-                text-white flex items-center justify-center shadow-lg shadow-black/30 animate-pulse touch-manipulation"
+                className="w-10 h-10 rounded-full flex items-center justify-center touch-manipulation"
+                style={{
+                    background: "rgba(255, 255, 255, 0.03)",
+                    border: "1px solid var(--signal)",
+                    boxShadow: "0 0 0 1px var(--signal), 0 0 30px -4px var(--signal)",
+                }}
             >
                 <span
-                    className="text-xs font-bold"
-                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                    className="text-base font-bold"
+                    style={{
+                        fontFamily: "var(--font-unbounded)",
+                        color: "var(--signal)",
+                        textShadow: "0 0 var(--signal), 0 0  var(--signal)",
+                    }}
                 >
                     {currentId}
                 </span>
