@@ -56,7 +56,8 @@ export function TaskNav() {
 
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="w-12 h-12 rounded-full bg-black/70 backdrop-blur-xl border border-white/10 text-white flex items-center justify-center shadow-lg shadow-black/30 animate-pulse"
+                className="w-12 h-12 rounded-full bg-black/70 backdrop-blur-xl border border-white/10 text-white 
+                           flex items-center justify-center shadow-lg shadow-black/30 animate-pulse"
             >
                 <span
                     className="text-xs font-bold"

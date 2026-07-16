@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { BookOpen, ListChecks, LayoutGrid } from "lucide-react";
 
 const links = [
-  // { href: "/lessons", label: "Уроки", icon: BookOpen },
+  //{ href: "/lessons", label: "Уроки", icon: BookOpen },
   { href: "/tasks", label: "Задания", icon: ListChecks },
-  // { href: "/variants", label: "Варианты", icon: LayoutGrid },
+  //{ href: "/variants", label: "Варианты", icon: LayoutGrid },
 ];
 
 export function BottomNav() {
@@ -17,11 +17,11 @@ export function BottomNav() {
     <nav
       className="
         fixed bottom-4 left-1/2 -translate-x-1/2
-        md:top-4 md:bottom-auto
-        flex gap-1 rounded-2xl p-2 z-50
+        md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:-translate-x-0 md:-translate-y-1/2
+        flex md:flex-col gap-1 rounded-2xl p-2 z-50
         bg-black/70 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/30
-  "
->
+      "
+    >
       {links.map(({ href, label, icon: Icon }) => {
         const isActive = pathname.startsWith(href);
 
