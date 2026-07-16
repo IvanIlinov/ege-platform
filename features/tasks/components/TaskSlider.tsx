@@ -143,16 +143,22 @@ export function TaskSlider({ task }: { task: Task }) {
                                     </button>
 
                                     <span
-                                        className="overflow-hidden font-semibold pr-3 whitespace-nowrap"
+                                        className="overflow-hidden whitespace-nowrap"
                                         style={{
-                                            fontFamily: "var(--font-jetbrains-mono)",
-                                            color: "var(--signal)",
                                             maxWidth: isRevealed ? "200px" : "0px",
                                             opacity: isRevealed ? 1 : 0,
                                             transition: "all 0.45s cubic-bezier(0.65, 0, 0.35, 1)",
                                         }}
                                     >
-                                        {activeTask.correctAnswer.join(", ")}
+                                        <span
+                                            className="inline-block font-semibold whitespace-nowrap pr-3"
+                                            style={{
+                                                fontFamily: "var(--font-jetbrains-mono)",
+                                                color: "#ffffff",
+                                            }}
+                                        >
+                                            {activeTask.correctAnswer.join(", ")}
+                                        </span>
                                     </span>
                                 </div>
 
