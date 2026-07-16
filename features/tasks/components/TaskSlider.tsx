@@ -100,8 +100,8 @@ export function TaskSlider({ task }: { task: Task }) {
                                 <button
                                     onClick={() => setSlide("video")}
                                     className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/15 
-                                        border border-white/10 px-4 py-2 text-sm text-white transition-colors 
-                                        touch-manipulation shrink-0"
+                                        border border-white/10 py-2 px-4 text-sm text-white transition-colors 
+                                        touch-manipulation shrink-0 h-10"
                                 >
                                     <ChevronLeft size={16} />
                                     К видео
@@ -109,7 +109,7 @@ export function TaskSlider({ task }: { task: Task }) {
 
                                 {/* Трек-подложка — эффект утопленного паза */}
                                 <div
-                                    className="relative flex items-center rounded-full p-1"
+                                    className="relative flex items-center rounded-full p-0.5"
                                     style={{
                                         background: "rgba(0, 0, 0, 0.25)",
                                         boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.03)",
@@ -119,7 +119,8 @@ export function TaskSlider({ task }: { task: Task }) {
                                 >
                                     <button
                                         onClick={() => toggleReveal(activeIndex)}
-                                        className="flex items-center rounded-full py-2 px-3.5 text-sm text-white touch-manipulation overflow-hidden"
+                                        className="flex items-center rounded-full py-1.5 px-3 
+                                            text-sm text-white touch-manipulation overflow-hidden h-10"
                                         style={{
                                             background: isRevealed
                                                 ? "rgba(255, 255, 255, 0.14)"
