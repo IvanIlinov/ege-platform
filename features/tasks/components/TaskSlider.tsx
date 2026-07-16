@@ -63,13 +63,6 @@ export function TaskSlider({ task }: { task: Task }) {
                     <div className="w-1/2 shrink-0 pl-2">
                         <div className="glass-card p-4 md:p-6 min-h-[320px] flex flex-col">
                             <div className="flex items-center gap-2 mb-4 flex-wrap">
-                                <button
-                                    onClick={() => setSlide("video")}
-                                    className="flex items-center justify-center h-8 w-8 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-white transition-colors shrink-0"
-                                >
-                                    <ChevronLeft size={16} />
-                                </button>
-
                                 <div className="flex flex-wrap gap-1.5">
                                     {task.tasks.map((item, i) => {
                                         const isActive = i === activeIndex;
@@ -100,24 +93,35 @@ export function TaskSlider({ task }: { task: Task }) {
                             >
                                 {activeTask.condition}
                             </p>
-
-                            <div className="mt-4 flex items-center gap-3 flex-wrap">
-                                <button
-                                    onClick={() => toggleReveal(activeIndex)}
-                                    className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm text-white transition-colors"
-                                >
-                                    <Eye size={16} />
-                                    {revealed.has(activeIndex) ? "Скрыть ответ" : "Показать ответ"}
-                                </button>
-
-                                {revealed.has(activeIndex) && (
-                                    <span
-                                        className="text-[var(--signal)] font-semibold"
-                                        style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                            <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
+                                <div className="flex items-center gap-3 flex-wrap">
+                                    <button
+                                        onClick={() => toggleReveal(activeIndex)}
+                                        className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm text-white transition-colors touch-manipulation"
                                     >
-                                        {activeTask.correctAnswer.join(", ")}
-                                    </span>
-                                )}
+                                        <Eye size={16} />
+                                        {revealed.has(activeIndex) ? "Скрыть ответ" : "Показать ответ"}
+                                    </button>
+
+                                    {revealed.has(activeIndex) && (
+                                        <span
+                                            className="text-[var(--signal)] font-semibold"
+                                            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                                        >
+                                            {activeTask.correctAnswer.join(", ")}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <button
+                                    onClick={() => setSlide("video")}
+                                    className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/15 
+                                        border border-white/10 px-4 py-2 text-sm text-white transition-colors 
+                                        touch-manipulation shrink-0"
+                                >
+                                    <ChevronLeft size={16} />
+                                    К видео
+                                </button>
                             </div>
                         </div>
                     </div>
