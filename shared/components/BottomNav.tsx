@@ -6,7 +6,7 @@ import { BookOpen, ListChecks, LayoutGrid } from "lucide-react";
 
 const links = [
   //{ href: "/lessons", label: "Уроки", icon: BookOpen },
-  { href: "/tasks/1", label: "Задания", icon: ListChecks },
+  { href: "/tasks", label: "Задания", icon: ListChecks },
   //{ href: "/variants", label: "Варианты", icon: LayoutGrid },
 ];
 
@@ -28,15 +28,15 @@ export function BottomNav() {
         return (
           <Link
             key={href}
-            href={href}
+            href={`${href}/1`}
             className={`
-              flex flex-col items-center gap-1 px-4 py-2 rounded-xl
-              transition-colors duration-150
-              ${isActive
-                ? "bg-white text-black"
-                : "text-white hover:bg-white/10"
+        flex flex-col items-center gap-1 px-4 py-2 rounded-xl
+        transition-colors duration-150 bg-black text-white
+        ${isActive
+                ? "border border-white/60"
+                : "border border-transparent hover:border-white/20"
               }
-            `}
+    `}
           >
             <Icon size={20} />
             <span className="text-xs">{label}</span>
