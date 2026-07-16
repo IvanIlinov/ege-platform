@@ -6,7 +6,7 @@ import { BookOpen, ListChecks, LayoutGrid } from "lucide-react";
 
 const links = [
   //{ href: "/lessons", label: "Уроки", icon: BookOpen },
-  { href: "/tasks", label: "Задания", icon: ListChecks },
+  { href: "/tasks/1", label: "Задания", icon: ListChecks },
   //{ href: "/variants", label: "Варианты", icon: LayoutGrid },
 ];
 
