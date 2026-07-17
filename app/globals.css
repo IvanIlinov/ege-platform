@@ -170,9 +170,16 @@ body::before {
   }
 
   50% {
-    opacity: 0.;
-    box-shadow: 0 0 12px 4px var(--signal);
+    opacity: 1;
+    box-shadow: 0 0 14px 5px var(--signal);
   }
+}
+
+.signal-dot {
+  opacity: 1;
+  will-change: box-shadow;
+  box-shadow: 0 0 6px 2px var(--signal);
+  animation: pulse-dot 2s ease-in-out infinite;
 }
 
 @keyframes ping-dot {

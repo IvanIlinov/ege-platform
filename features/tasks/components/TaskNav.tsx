@@ -79,12 +79,7 @@ export function TaskNav() {
             )}
             {/* Шар */}
             {/* Внешняя подложка — тень */}
-            <div
-                className="rounded-full p-[2px] nav-panel"
-                style={{
-                    background: "rgba(255, 255, 255, 0.08)",
-                }}
-            >
+            <div>
                 {/* Внутренняя рамка — светящаяся */}
                 <button
                     onClick={() => setIsOpen((prev) => !prev)}
