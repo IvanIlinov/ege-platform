@@ -88,20 +88,15 @@ export function TaskNav() {
                 {/* Внутренняя рамка — светящаяся */}
                 <button
                     onClick={() => setIsOpen((prev) => !prev)}
-                    className="w-10 h-10 rounded-full flex items-center justify-center touch-manipulation nav-active"
+                    className="w-10 h-10 rounded-full flex items-center justify-center touch-manipulation"
                     style={{
                         background: "rgba(255, 255, 255, 0.03)",
                     }}
                 >
-                    <span
-                        className="text-sm font-normal"
-                        style={{
-                            fontFamily: "var(--font-unbounded)",
-                            color: "var(--signal)",
-                        }}
-                    >
-                        {currentId}
-                    </span>
+                    <div
+                        className="signal-dot w-2.5 h-2.5 rounded-full"
+                        style={{ background: "var(--signal)" }}
+                    />
                 </button>
             </div>
         </div>

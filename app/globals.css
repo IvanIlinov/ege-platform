@@ -159,3 +159,49 @@ body::before {
     opacity: 0;
   }
 }
+
+/* Шар */
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 6px 2px var(--signal);
+  }
+
+  50% {
+    opacity: 0.;
+    box-shadow: 0 0 12px 4px var(--signal);
+  }
+}
+
+@keyframes ping-dot {
+  0% {
+    box-shadow: 0 0 0 0px color-mix(in srgb, var(--signal) 40%, transparent);
+  }
+
+  80% {
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--signal) 0%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0px color-mix(in srgb, var(--signal) 0%, transparent);
+  }
+}
+
+@keyframes breathe-dot {
+
+  0%,
+  100% {
+    box-shadow: 0 0 6px 2px var(--signal);
+  }
+
+  50% {
+    box-shadow: 0 0 16px 6px var(--signal);
+  }
+}
+
+.signal-dot {
+  box-shadow: 0 0 10px 20px var(--signal);
+  animation: pulse-dot 3.4s ease-in-out infinite;
+}
