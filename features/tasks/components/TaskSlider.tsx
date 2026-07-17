@@ -1,20 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ChevronRight, ChevronLeft, Eye } from "lucide-react";
 import { Task } from "../types/task";
 
 export function TaskSlider({ task }: { task: Task }) {
     const [slide, setSlide] = useState<"video" | "practice">("video");
     const [activeIndex, setActiveIndex] = useState(0);
-
     const [direction, setDirection] = useState<"left" | "right">("right");
     const [animationKey, setAnimationKey] = useState(0);
-
     const [revealedTasks, setRevealedTasks] = useState<Record<string, boolean>>({});
 
-    const activeTask = task.tasks[activeIndex];
+    const [dragOffset, setDragOffset] = useState(0);
+    const touchStartX = useRef(0);
+    const isDragging = useRef(false);
 
+    const activeTask = task.tasks[activeIndex];
     const revealKey = `${task.id}-${activeIndex}`;
     const isRevealed = revealedTasks[revealKey] ?? false;
 
@@ -23,6 +24,35 @@ export function TaskSlider({ task }: { task: Task }) {
             ...prev,
             [revealKey]: !prev[revealKey],
         }));
+    }
+
+    function handleTouchStart(e: React.TouchEvent) {
+        touchStartX.current = e.touches[0].clientX;
+        isDragging.current = true;
+    }
+
+    function handleTouchMove(e: React.TouchEvent) {
+        if (!isDragging.current) return;
+        const delta = e.touches[0].clientX - touchStartX.current;
+
+        // Не тянем за границы
+        if (slide === "video" && delta > 0) return;
+        if (slide === "practice" && delta < 0) return;
+
+        setDragOffset(delta);
+    }
+
+    function handleTouchEnd() {
+        isDragging.current = false;
+        const THRESHOLD = 50;
+
+        if (dragOffset < -THRESHOLD && slide === "video") {
+            setSlide("practice");
+        } else if (dragOffset > THRESHOLD && slide === "practice") {
+            setSlide("video");
+        }
+
+        setDragOffset(0);
     }
 
     return (
@@ -54,13 +84,22 @@ export function TaskSlider({ task }: { task: Task }) {
                     <ChevronRight size={18} />
                 </button>
             )}
-            {/* Панель*/}
-            <div className="overflow-hidden rounded-3xl">
+
+            {/* Панель */}
+            <div
+                className="overflow-hidden rounded-3xl"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
                 <div
-                    className="flex transition-transform duration-500 ease-out"
+                    className="flex"
                     style={{
                         width: "200%",
-                        transform: slide === "video" ? "translateX(0%)" : "translateX(-50%)",
+                        transform: slide === "video"
+                            ? `translateX(calc(0% + ${dragOffset / 2}px))`
+                            : `translateX(calc(-50% + ${dragOffset / 2}px))`,
+                        transition: dragOffset === 0 ? "transform 0.5s ease-out" : "none",
                     }}
                 >
                     {/* Слайд 1: Видео */}
@@ -88,16 +127,13 @@ export function TaskSlider({ task }: { task: Task }) {
                         <div className="glass-card p-4 md:p-6 min-h-[320px] flex flex-col">
                             <div className="flex items-center gap-2 mb-4 flex-wrap">
                                 <div className="flex flex-wrap gap-1.5">
-                                    {/* Перебор задачек */}
                                     {task.tasks.map((item, i) => {
-                                        {/* Код на Актив-кнопку */ }
                                         const isActive = i === activeIndex;
                                         return (
                                             <button
                                                 key={item.id}
                                                 onClick={() => {
                                                     if (i === activeIndex) return;
-
                                                     setDirection(i > activeIndex ? "left" : "right");
                                                     setAnimationKey((prev) => prev + 1);
                                                     setActiveIndex(i);
@@ -121,10 +157,7 @@ export function TaskSlider({ task }: { task: Task }) {
 
                             <div
                                 key={animationKey}
-                                className={`flex-1 ${direction === "left"
-                                    ? "animate-slide-left"
-                                    : "animate-slide-right"
-                                    }`}
+                                className={`flex-1 ${direction === "left" ? "animate-slide-left" : "animate-slide-right"}`}
                             >
                                 <p
                                     className="text-white/85 leading-relaxed"
@@ -135,8 +168,6 @@ export function TaskSlider({ task }: { task: Task }) {
                             </div>
 
                             <div key={`${task.id}-${activeIndex}`} className="mt-4 flex items-center justify-center">
-
-                                {/* Трек-подложка — эффект утопленного паза */}
                                 <div
                                     className="relative flex items-center rounded-full p-0.5"
                                     style={{
@@ -191,7 +222,6 @@ export function TaskSlider({ task }: { task: Task }) {
                                         </span>
                                     </span>
                                 </div>
-
                             </div>
                         </div>
                     </div>
