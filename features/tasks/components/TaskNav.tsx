@@ -18,7 +18,7 @@ export function TaskNav() {
     }
 
     return (
-        <div className="fixed left-4 bottom-4 md:bottom-auto md:top-4 z-[100] p-4 -m-4">
+        <div className="fixed left-4 bottom-8 md:bottom-auto md:top-4 z-[100] p-4 -m-4">
             {/* Открытие шара */}
             {isOpen && (
                 <div

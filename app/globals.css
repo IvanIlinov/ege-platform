@@ -141,5 +141,5 @@ body::before {
 }
 
 .task-transition {
-  animation: task-transition 0.9s linear;
+  animation: task-transition 0.2s linear;
 }
