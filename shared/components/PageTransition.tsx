@@ -3,6 +3,7 @@
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { BottomNav } from "@/shared/components/BottomNav";
 
 type TransitionContextType = {
     navigate: (href: string) => void;
@@ -40,9 +41,12 @@ export function PageTransition({ children }: { children: ReactNode }) {
 
     return (
         <TransitionContext.Provider value={{ navigate }}>
+            {/* Только контент анимируется */}
             <div className={`flex-1 pb-24 md:pt-20 md:pb-0 ${isExiting ? "task-transition-exit" : ""}`}>
                 {children}
             </div>
+            {/* BottomNav вне анимируемого блока, но внутри контекста */}
+            <BottomNav />
         </TransitionContext.Provider>
     );
 }

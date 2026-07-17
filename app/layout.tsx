@@ -33,7 +33,6 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} ${unbounded.variable} ${golosText.variable} ${jetbrainsMono.variable} min-h-full flex flex-col`}>
         <PageTransition>
           {children}
-          <BottomNav />
         </PageTransition>
       </body>
     </html>
