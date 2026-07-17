@@ -1,9 +1,9 @@
-// shared/components/PageTransition.tsx
 "use client";
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { BottomNav } from "@/shared/components/BottomNav";
+import { TaskNav } from "@/features/tasks/components/TaskNav";
 
 type TransitionContextType = {
     navigate: (href: string) => void;
@@ -11,7 +11,6 @@ type TransitionContextType = {
 
 const TransitionContext = createContext<TransitionContextType | null>(null);
 
-// Должно совпадать с длительностью .task-transition-exit в globals.css
 const EXIT_DURATION = 200;
 
 export function PageTransition({ children }: { children: ReactNode }) {
@@ -21,17 +20,15 @@ export function PageTransition({ children }: { children: ReactNode }) {
     const pendingHref = useRef<string | null>(null);
 
     const navigate = useCallback((href: string) => {
-        if (href === pathname) return; // уже на этой странице — анимация не нужна
+        if (href === pathname) return;
         pendingHref.current = href;
         setIsExiting(true);
 
         setTimeout(() => {
             router.push(href);
-            // isExiting НЕ сбрасываем здесь — ждём реальной смены pathname
         }, EXIT_DURATION);
     }, [pathname, router]);
 
-    // Гасим exit-класс только когда новая страница реально пришла
     useEffect(() => {
         if (pendingHref.current && pathname === pendingHref.current) {
             setIsExiting(false);
@@ -41,11 +38,10 @@ export function PageTransition({ children }: { children: ReactNode }) {
 
     return (
         <TransitionContext.Provider value={{ navigate }}>
-            {/* Только контент анимируется */}
             <div className={`flex-1 pb-24 md:pt-20 md:pb-0 ${isExiting ? "task-transition-exit" : ""}`}>
                 {children}
             </div>
-            {/* BottomNav вне анимируемого блока, но внутри контекста */}
+            {pathname.startsWith("/tasks") && <TaskNav />}
             <BottomNav />
         </TransitionContext.Provider>
     );

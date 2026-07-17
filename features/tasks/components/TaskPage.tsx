@@ -1,6 +1,5 @@
 import { Task } from "../types/task";
 import { TaskSlider } from "./TaskSlider";
-import { TaskNav } from "./TaskNav";
 
 export function TaskPage({ task }: { task: Task }) {
   return (
@@ -38,8 +37,7 @@ export function TaskPage({ task }: { task: Task }) {
         {/* Основа */}
         <TaskSlider key={task.id} task={task} />
       </div>
-      {/* Навигация */}
-      <TaskNav />
+      {/* Навигация была тут TaskNav*/}
     </div>
   );
 }
