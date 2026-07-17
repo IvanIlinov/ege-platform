@@ -2,18 +2,19 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
+import { useTransitionNavigate } from "@/shared/components/PageTransition";
 
 const TASK_COUNT = 27;
 
 export function TaskNav() {
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter();
+    const navigate = useTransitionNavigate(); // вместо useRouter()
     const pathname = usePathname();
 
     const currentId = pathname.split("/")[2];
 
     function handleSelect(id: number) {
-        router.push(`/tasks/${id}`);
+        navigate(`/tasks/${id}`);
         setIsOpen(false);
     }
 

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, ListChecks, LayoutGrid } from "lucide-react";
+import { useTransitionNavigate } from "@/shared/components/PageTransition";
 
 const links = [
   //{ href: "/lessons", label: "Уроки", icon: BookOpen },
@@ -12,6 +13,7 @@ const links = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  const navigate = useTransitionNavigate();
 
   return (
     <nav
@@ -24,11 +26,16 @@ export function BottomNav() {
     >
       {links.map(({ href, label, icon: Icon }) => {
         const isActive = pathname.startsWith(href);
+        const target = `${href}/1`;
 
         return (
           <Link
             key={href}
-            href={`${href}/1`}
+            href={target}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(target);
+            }}
             className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-colors duration-150"
             style={isActive ? {
               background: "rgba(255, 255, 255, 0.03)",
