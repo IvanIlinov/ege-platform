@@ -14,7 +14,7 @@ export default async function Page({
     if (!task) {
         notFound();
     }
-    
-    return <TaskPage task={task} />;
-    
+
+    return <TaskPage key={id} task={task} />;
+
 }

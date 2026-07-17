@@ -7,17 +7,19 @@ import { Task } from "../types/task";
 export function TaskSlider({ task }: { task: Task }) {
     const [slide, setSlide] = useState<"video" | "practice">("video");
     const [activeIndex, setActiveIndex] = useState(0);
-    const [revealed, setRevealed] = useState<Set<number>>(new Set());
+
+    const [revealedTasks, setRevealedTasks] = useState<Record<string, boolean>>({});
 
     const activeTask = task.tasks[activeIndex];
-    const isRevealed = revealed.has(activeIndex);
 
-    function toggleReveal(index: number) {
-        setRevealed((prev) => {
-            const next = new Set(prev);
-            next.has(index) ? next.delete(index) : next.add(index);
-            return next;
-        });
+    const revealKey = `${task.id}-${activeIndex}`;
+    const isRevealed = revealedTasks[revealKey] ?? false;
+
+    function toggleReveal() {
+        setRevealedTasks((prev) => ({
+            ...prev,
+            [revealKey]: !prev[revealKey],
+        }));
     }
 
     return (
@@ -113,7 +115,7 @@ export function TaskSlider({ task }: { task: Task }) {
                                 {activeTask.condition}
                             </p>
 
-                            <div className="mt-4 flex items-center justify-center">
+                            <div key={`${task.id}-${activeIndex}`} className="mt-4 flex items-center justify-center">
 
                                 {/* Трек-подложка — эффект утопленного паза */}
                                 <div
@@ -126,7 +128,7 @@ export function TaskSlider({ task }: { task: Task }) {
                                     }}
                                 >
                                     <button
-                                        onClick={() => toggleReveal(activeIndex)}
+                                        onClick={() => toggleReveal()}
                                         className="flex items-center rounded-full py-1.5 px-3 
                                             text-sm text-white touch-manipulation overflow-hidden h-10"
                                         style={{

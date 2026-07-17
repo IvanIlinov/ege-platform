@@ -36,7 +36,7 @@ export function TaskPage({ task }: { task: Task }) {
           </div>
         </header>
         {/* Основа */}
-        <TaskSlider task={task} />
+        <TaskSlider key={task.id} task={task} />
       </div>
       {/* Навигация */}
       <TaskNav />
