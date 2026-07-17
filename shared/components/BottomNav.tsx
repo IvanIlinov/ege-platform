@@ -19,7 +19,7 @@ export function BottomNav() {
         fixed bottom-4 left-1/2 -translate-x-1/2
         md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:-translate-x-0 md:-translate-y-1/2
         flex md:flex-col gap-1 rounded-2xl p-2 z-50
-        bg-black/70 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/30
+        bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/30
       "
     >
       {links.map(({ href, label, icon: Icon }) => {
@@ -29,14 +29,16 @@ export function BottomNav() {
           <Link
             key={href}
             href={`${href}/1`}
-            className={`
-        flex flex-col items-center gap-1 px-4 py-2 rounded-xl
-        transition-colors duration-150 bg-black text-white
-        ${isActive
-                ? "border border-white/60"
-                : "border border-transparent hover:border-white/20"
-              }
-    `}
+            className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-colors duration-150"
+            style={isActive ? {
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid var(--signal)",
+              boxShadow: "0 0 0 1px var(--signal), 0 0 12px -3px var(--signal)",
+              color: "var(--signal)",
+            } : {
+              color: "rgba(255, 255, 255, 0.6)",
+              border: "1px solid transparent",
+            }}
           >
             <Icon size={20} />
             <span className="text-xs">{label}</span>
