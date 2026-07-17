@@ -39,18 +39,32 @@ export function TaskNav() {
                                 >
                                     <button
                                         onClick={() => handleSelect(id)}
-                                        className="w-9 h-9 rounded-full text-sm font-medium transition-colors touch-manipulation"
+                                        className="
+                                                    relative
+                                                    w-9 h-9
+                                                    rounded-full
+                                                    text-sm font-medium
+                                                    transition-colors
+                                                    touch-manipulation
+                                                    after:absolute
+                                                    after:inset-[-1px]
+                                                    after:rounded-full
+                                                    after:border-2
+                                                    after:border-white/0
+                                                    hover:after:border-white/72
+                                                    after:transition-colors
+                                                "
                                         style={isActive ? {
                                             borderColor: "var(--signal)",
                                             color: "var(--signal)",
                                             boxShadow: "0 0 0 1px var(--signal), 0 0 20px -4px var(--signal), inset 0 1px 3px rgba(0,0,0,0.3)",
                                             background: "rgba(255, 255, 255, 0.03)",
-                                            border: "1px solid var(--signal)",
+                                            border: "2px solid var(--signal)",
                                             fontFamily: "var(--font-jetbrains-mono)"
                                         } : {
                                             background: "transparent",
                                             border: "none",
-                                            color: "rgba(255, 255, 255, 0.73)",
+                                            color: "rgba(255, 255, 255, 0.9)",
                                             fontFamily: "var(--font-jetbrains-mono)"
                                         }}
                                     >
