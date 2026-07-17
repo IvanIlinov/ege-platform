@@ -1,15 +1,16 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useState, useRef, useEffect } from "react";
 import { useTransitionNavigate } from "@/shared/components/PageTransition";
 
 const TASK_COUNT = 27;
 
 export function TaskNav() {
     const [isOpen, setIsOpen] = useState(false);
-    const navigate = useTransitionNavigate(); // вместо useRouter()
+    const navigate = useTransitionNavigate();
     const pathname = usePathname();
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const currentId = pathname.split("/")[2];
 
@@ -18,8 +19,29 @@ export function TaskNav() {
         setIsOpen(false);
     }
 
+    useEffect(() => {
+        if (!isOpen) return;
+
+        function handleOutsideClick(e: MouseEvent | TouchEvent) {
+            if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleOutsideClick);
+        document.addEventListener("touchstart", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+            document.removeEventListener("touchstart", handleOutsideClick);
+        };
+    }, [isOpen]);
+
     return (
-        <div className="fixed left-4 bottom-8 md:bottom-auto md:top-4 z-[100] p-4 -m-4">
+        <div
+            ref={wrapperRef}
+            className="fixed left-4 bottom-8 md:bottom-auto md:top-4 z-[100] p-4 -m-4"
+        >
             {/* Открытие шара */}
             {isOpen && (
                 <div
