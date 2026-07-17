@@ -128,3 +128,18 @@ body::before {
 .animate-slide-right {
   animation: slide-right 0.25s ease-out;
 }
+
+/* Page Animation */
+@keyframes task-transition {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.task-transition {
+  animation: task-transition 0.9s linear;
+}
