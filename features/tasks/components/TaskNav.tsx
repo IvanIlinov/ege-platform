@@ -18,66 +18,77 @@ export function TaskNav() {
     }
 
     return (
-        <div className="fixed left-4 bottom-4 md:bottom-auto md:top-4 z-[100]">
+        <div className="fixed left-4 bottom-4 md:bottom-auto md:top-4 z-[100] p-4 -m-4">
             {/* Открытие шара */}
             {isOpen && (
                 <div
                     className="
-            absolute left-0 w-64 max-w-[calc(100vw-2rem)]
-            bottom-16 md:bottom-auto md:top-16
-            bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3
-          "
+            absolute left-4 w-64 max-w-[calc(100vw-2rem)]
+            bottom-16 md:bottom-auto md:top-18
+            bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 nav-panel
+        "
                 >
-                    <div className="grid grid-cols-5 gap-2">
+                    <div className="grid grid-cols-5 gap-1">
                         {Array.from({ length: TASK_COUNT }, (_, i) => i + 1).map((id) => {
                             const isActive = String(id) === currentId;
                             return (
-                                <button
+                                <div
                                     key={id}
-                                    onClick={() => handleSelect(id)}
-                                    className="w-9 h-9 rounded-full text-sm font-medium transition-colors touch-manipulation"
-                                    style={isActive ? {
-                                        borderColor: "var(--signal)",
-                                        color: "var(--signal)",
-                                        boxShadow: "0 0 0 1px var(--signal), 0 0 20px -4px var(--signal)",
-                                        background: "rgba(255, 255, 255, 0.03)",
-                                        border: "1px solid var(--signal)",
-                                        fontFamily: "var(--font-jetbrains-mono)"
-                                    } : {
-                                        background: "rgba(255, 255, 255, 0.05)",
-                                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                                        color: "rgba(255, 255, 255, 0.6)",
-                                        fontFamily: "var(--font-jetbrains-mono)"
-                                    }}
+                                    className="rounded-full p-[2px]"
+
                                 >
-                                    {id}
-                                </button>
+                                    <button
+                                        onClick={() => handleSelect(id)}
+                                        className="w-9 h-9 rounded-full text-sm font-medium transition-colors touch-manipulation"
+                                        style={isActive ? {
+                                            borderColor: "var(--signal)",
+                                            color: "var(--signal)",
+                                            boxShadow: "0 0 0 1px var(--signal), 0 0 20px -4px var(--signal), inset 0 1px 3px rgba(0,0,0,0.3)",
+                                            background: "rgba(255, 255, 255, 0.03)",
+                                            border: "1px solid var(--signal)",
+                                            fontFamily: "var(--font-jetbrains-mono)"
+                                        } : {
+                                            background: "transparent",
+                                            border: "none",
+                                            color: "rgba(255, 255, 255, 0.73)",
+                                            fontFamily: "var(--font-jetbrains-mono)"
+                                        }}
+                                    >
+                                        {id}
+                                    </button>
+                                </div>
                             );
                         })}
                     </div>
                 </div>
             )}
             {/* Шар */}
-            <button
-                onClick={() => setIsOpen((prev) => !prev)}
-                className="w-10 h-10 rounded-full flex items-center justify-center touch-manipulation"
+            {/* Внешняя подложка — тень */}
+            <div
+                className="rounded-full p-[2px] nav-panel"
                 style={{
-                    background: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid var(--signal)",
-                    boxShadow: "0 0 0 1px var(--signal), 0 0 30px -4px var(--signal)",
+                    background: "rgba(255, 255, 255, 0.08)",
                 }}
             >
-                <span
-                    className="text-base font-bold"
+                {/* Внутренняя рамка — светящаяся */}
+                <button
+                    onClick={() => setIsOpen((prev) => !prev)}
+                    className="w-10 h-10 rounded-full flex items-center justify-center touch-manipulation nav-active"
                     style={{
-                        fontFamily: "var(--font-unbounded)",
-                        color: "var(--signal)",
-                        textShadow: "0 0 var(--signal), 0 0  var(--signal)",
+                        background: "rgba(255, 255, 255, 0.03)",
                     }}
                 >
-                    {currentId}
-                </span>
-            </button>
+                    <span
+                        className="text-sm font-normal"
+                        style={{
+                            fontFamily: "var(--font-unbounded)",
+                            color: "var(--signal)",
+                        }}
+                    >
+                        {currentId}
+                    </span>
+                </button>
+            </div>
         </div>
     );
 }

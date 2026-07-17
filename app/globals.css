@@ -20,9 +20,9 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--signal) 20%, transparent), transparent 45%),
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--signal) 8%, transparent), transparent 45%),
     /* было 10% */
-    radial-gradient(circle at 80% 80%, color-mix(in srgb, var(--signal) 18%, transparent), transparent 45%);
+    radial-gradient(circle at 80% 80%, color-mix(in srgb, var(--signal) 6%, transparent), transparent 45%);
   /* было 7% */
   /*animation: breathe 30s ease-in-out infinite;*/
 }
@@ -43,7 +43,7 @@ body::before {
 
 /* DESIGN SYSTEM */
 :root {
-  --signal: #FFD600;
+  --signal: #DCE3E8;
 
 }
 
@@ -52,7 +52,11 @@ body::before {
     radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--signal) 12%, transparent), transparent 55%),
     radial-gradient(circle at 90% 100%, color-mix(in srgb, var(--signal) 8%, transparent), transparent 45%),
     linear-gradient(180deg, #14141a 0%, #1b1b22 100%);
-  /* было #0c0c10 → #131319 */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 30px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 60px -20px color-mix(in srgb, var(--signal) 20%, transparent);
 }
 
 .glass-card {
@@ -76,4 +80,18 @@ body::before {
   border-color: var(--signal);
   color: var(--signal);
   box-shadow: 0 0 0 1px var(--signal), 0 0 20px -4px var(--signal);
+}
+
+.nav-panel {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 8px 43px 7px rgba(0, 0, 0, 0.7),
+    0 0 50px 5px color-mix(in srgb, var(--signal) 20%, transparent);
+}
+
+.nav-active {
+  border-color: var(--signal) !important;
+  box-shadow:
+    0 0 0 1px var(--signal),
+    0 0 9px -3px var(--signal);
 }
