@@ -8,6 +8,9 @@ export function TaskSlider({ task }: { task: Task }) {
     const [slide, setSlide] = useState<"video" | "practice">("video");
     const [activeIndex, setActiveIndex] = useState(0);
 
+    const [direction, setDirection] = useState<"left" | "right">("right");
+    const [animationKey, setAnimationKey] = useState(0);
+
     const [revealedTasks, setRevealedTasks] = useState<Record<string, boolean>>({});
 
     const activeTask = task.tasks[activeIndex];
@@ -51,7 +54,7 @@ export function TaskSlider({ task }: { task: Task }) {
                     <ChevronRight size={18} />
                 </button>
             )}
-
+            {/* Панель*/}
             <div className="overflow-hidden rounded-3xl">
                 <div
                     className="flex transition-transform duration-500 ease-out"
@@ -85,12 +88,20 @@ export function TaskSlider({ task }: { task: Task }) {
                         <div className="glass-card p-4 md:p-6 min-h-[320px] flex flex-col">
                             <div className="flex items-center gap-2 mb-4 flex-wrap">
                                 <div className="flex flex-wrap gap-1.5">
+                                    {/* Перебор задачек */}
                                     {task.tasks.map((item, i) => {
+                                        {/* Код на Актив-кнопку */ }
                                         const isActive = i === activeIndex;
                                         return (
                                             <button
                                                 key={item.id}
-                                                onClick={() => setActiveIndex(i)}
+                                                onClick={() => {
+                                                    if (i === activeIndex) return;
+
+                                                    setDirection(i > activeIndex ? "left" : "right");
+                                                    setAnimationKey((prev) => prev + 1);
+                                                    setActiveIndex(i);
+                                                }}
                                                 className={`h-8 w-8 rounded-full text-xs font-semibold border transition-colors ${isActive
                                                     ? "border-[#4FC3F7] text-black"
                                                     : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
@@ -108,12 +119,20 @@ export function TaskSlider({ task }: { task: Task }) {
                                 </div>
                             </div>
 
-                            <p
-                                className="text-white/85 leading-relaxed flex-1"
-                                style={{ fontFamily: "var(--font-golos)" }}
+                            <div
+                                key={animationKey}
+                                className={`flex-1 ${direction === "left"
+                                    ? "animate-slide-left"
+                                    : "animate-slide-right"
+                                    }`}
                             >
-                                {activeTask.condition}
-                            </p>
+                                <p
+                                    className="text-white/85 leading-relaxed"
+                                    style={{ fontFamily: "var(--font-golos)" }}
+                                >
+                                    {activeTask.condition}
+                                </p>
+                            </div>
 
                             <div key={`${task.id}-${activeIndex}`} className="mt-4 flex items-center justify-center">
 
