@@ -187,7 +187,7 @@ export function TaskSlider({ task }: { task: Task }) {
                 >
                     {/* Слайд 1: Видео */}
                     <div className="w-1/2 shrink-0 pr-2">
-                        <div className="glass-card p-4 md:p-6 min-h-[320px] flex flex-col">
+                        <div className="glass-card p-4 md:p-6 min-h-80 flex flex-col">
                             {task.videoUrl ? (
                                 <div className="aspect-video rounded-2xl overflow-hidden">
                                     {/* сюда позже вставим настоящий embed */}
@@ -211,7 +211,7 @@ export function TaskSlider({ task }: { task: Task }) {
                             className={`
                             glass-card
                             p-4 md:p-6
-                            min-h-[320px]
+                            min-h-80
                             flex flex-col
                             ${edgePush === "left" ? "edge-push-left" : ""}
                             ${edgePush === "right" ? "edge-push-right" : ""}

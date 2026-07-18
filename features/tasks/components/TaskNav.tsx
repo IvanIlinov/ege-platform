@@ -54,7 +54,7 @@ export function TaskNav() {
                         onClick={() => setIsOpen(false)}
                         className="
                             fixed inset-0
-                            z-[90]
+                            z-90
                             backdrop-blur-[2px]
                             bg-black/5
                         "
@@ -69,7 +69,7 @@ export function TaskNav() {
                     fixed
                     left-4 bottom-8
                     md:bottom-auto md:top-4
-                    z-[100]
+                    z-100
                 "
             >
                 <motion.div
@@ -88,7 +88,6 @@ export function TaskNav() {
                         overflow-hidden
                         bg-white/5
                         backdrop-blur-xl
-                        border border-white/10
                     "
                 >
                     {!isOpen ? (
