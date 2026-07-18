@@ -79,82 +79,180 @@ body::before {
 
 /* ---- Анимации входа карточек (появление подпункта задания) ---- */
 @keyframes slide-left {
-  from { opacity: 0; transform: translateX(30px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes slide-right {
-  from { opacity: 0; transform: translateX(-30px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.animate-slide-left  { animation: slide-left  0.25s ease-out; }
-.animate-slide-right { animation: slide-right 0.25s ease-out; }
+.animate-slide-left {
+  animation: slide-left 0.25s ease-out;
+}
+
+.animate-slide-right {
+  animation: slide-right 0.25s ease-out;
+}
 
 /* ---- Анимация перехода между страницами ---- */
 @keyframes task-transition {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.task-transition { animation: task-transition 0.25s ease-out; }
+.task-transition {
+  animation: task-transition 0.25s ease-out;
+}
 
 @keyframes task-transition-exit {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
-.task-transition-exit { animation: task-transition-exit 0.15s ease-in forwards; }
+.task-transition-exit {
+  animation: task-transition-exit 0.15s ease-in forwards;
+}
 
 /* ---- Пульсирующая точка (индикатор/кнопка-триггер) ---- */
 @keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 6px 2px var(--signal); }
-  50%      { box-shadow: 0 0 14px 5px var(--signal); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px 2px var(--signal);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 8px 3.5px var(--signal);
+  }
 }
 
+
 .signal-dot {
-  box-shadow: 0 0 6px 2px var(--signal);
-  animation: pulse-dot 2.4s ease-in-out infinite;
+  animation: pulse-dot 3.8s ease-in-out infinite;
 }
 
 /* Второй вариант пульсации — "гидролокатор", про запас для будущих проектов */
 @keyframes pulse-ping {
-  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 40%, transparent); }
-  80%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--signal) 0%, transparent); }
-  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 0%, transparent); }
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 40%, transparent);
+  }
+
+  80% {
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--signal) 0%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 0%, transparent);
+  }
 }
 
-.signal-dot--ping { animation: pulse-ping 1.8s ease-out infinite; }
+.signal-dot--ping {
+  animation: pulse-ping 1.8s ease-out infinite;
+}
 
 /* ---- Реакция на край списка (упёрлись в границу при свайпе) ---- */
 @keyframes edge-bounce {
-  0%   { transform: translateX(0); }
-  35%  { transform: translateX(-12px); }
-  70%  { transform: translateX(6px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+
+  35% {
+    transform: translateX(-12px);
+  }
+
+  70% {
+    transform: translateX(6px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.edge-bounce { animation: edge-bounce 0.25s ease-out; }
+.edge-bounce {
+  animation: edge-bounce 0.25s ease-out;
+}
 
 @keyframes edge-push-left {
-  0%   { transform: translateX(0); }
-  45%  { transform: translateX(-14px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(-14px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes edge-push-right {
-  0%   { transform: translateX(0); }
-  45%  { transform: translateX(14px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(14px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.edge-push-left  { animation: edge-push-left  0.25s var(--ease-swipe); }
-.edge-push-right { animation: edge-push-right 0.25s var(--ease-swipe); }
+.edge-push-left {
+  animation: edge-push-left 0.25s var(--ease-swipe);
+}
+
+.edge-push-right {
+  animation: edge-push-right 0.25s var(--ease-swipe);
+}
 
 @keyframes text-edge-push {
-  0%   { transform: translateX(0); }
-  40%  { transform: translateX(-12px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+
+  40% {
+    transform: translateX(-12px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.text-edge-push { animation: text-edge-push 0.25s var(--ease-swipe); }
+.text-edge-push {
+  animation: text-edge-push 0.25s var(--ease-swipe);
+}

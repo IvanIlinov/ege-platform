@@ -39,7 +39,7 @@ export function ExpandingBubble({
         borderRadius: isOpen ? 24 : 999,
       }}
       transition={{ type: "spring", stiffness: 380, damping: 30 }}
-      className="overflow-hidden bg-white/5 backdrop-blur-xl"
+      className="overflow-hidden backdrop-blur-xl"
     >
       {!isOpen ? (
         <button
