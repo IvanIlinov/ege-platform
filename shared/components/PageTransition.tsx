@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useCallback, useEffect, useRef, Re
 import { useRouter, usePathname } from "next/navigation";
 import { BottomNav } from "@/shared/components/BottomNav";
 import { TaskNav } from "@/features/tasks/components/TaskNav";
+import { AccentPicker } from "@/shared/ui/AccentPicker";
 
 type TransitionContextType = {
     navigate: (href: string) => void;
@@ -43,6 +44,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
             </div>
             {pathname.startsWith("/tasks") && <TaskNav />}
             <BottomNav />
+            <AccentPicker />
         </TransitionContext.Provider>
     );
 }

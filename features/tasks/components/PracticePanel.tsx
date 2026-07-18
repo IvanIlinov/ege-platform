@@ -13,7 +13,6 @@ type PracticePanelProps = {
   isRevealed: boolean;
   onToggleReveal: () => void;
   edgeBounce: boolean;
-  edgePush: "left" | "right" | null;
 };
 
 export function PracticePanel({
@@ -26,13 +25,9 @@ export function PracticePanel({
   isRevealed,
   onToggleReveal,
   edgeBounce,
-  edgePush,
 }: PracticePanelProps) {
-  const edgePushClass =
-    edgePush === "left" ? "edge-push-left" : edgePush === "right" ? "edge-push-right" : "";
-
   return (
-    <GlassCard className={`p-4 md:p-6 min-h-80 flex flex-col ${edgePushClass}`}>
+    <GlassCard className="p-4 md:p-6 min-h-80 flex flex-col">
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         <Pills count={items.length} activeIndex={activeIndex} onSelect={onSelectIndex} />
       </div>

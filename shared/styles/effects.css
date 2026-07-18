@@ -62,7 +62,7 @@ body::before {
   box-shadow: 0 0 0 1px var(--signal), 0 0 20px -4px var(--signal);
 }
 
-/* Навигационная панель (не используется сейчас, но зависит от неё название .nav-active) */
+/* Навигационная панель (зарезервировано, пока не используется) */
 .nav-panel {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04),
@@ -141,24 +141,26 @@ body::before {
   animation: task-transition-exit 0.15s ease-in forwards;
 }
 
-/* ---- Пульсирующая точка (индикатор/кнопка-триггер) ---- */
+/* ---- Пульсирующая точка (индикатор/кнопка-триггер) ----
+   Мягкое свечение без резкого спреда — раньше здесь было
+   задвоенное объявление с box-shadow 0 0 10px 20px, из-за чего
+   вокруг шара TaskNav был виден "ободок". Теперь спред = 0,
+   свечение мягко гаснет по краям, а не режется рамкой. */
 @keyframes pulse-dot {
 
   0%,
   100% {
-    opacity: 1;
-    box-shadow: 0 0 8px 2px var(--signal);
+    box-shadow: 0 0 6px 0 var(--signal);
   }
 
   50% {
-    opacity: 1;
-    box-shadow: 0 0 8px 3.5px var(--signal);
+    box-shadow: 0 0 12px 2px var(--signal);
   }
 }
 
-
 .signal-dot {
-  animation: pulse-dot 3.8s ease-in-out infinite;
+  box-shadow: 0 0 6px 0 var(--signal);
+  animation: pulse-dot 2.4s ease-in-out infinite;
 }
 
 /* Второй вариант пульсации — "гидролокатор", про запас для будущих проектов */
@@ -180,65 +182,7 @@ body::before {
   animation: pulse-ping 1.8s ease-out infinite;
 }
 
-/* ---- Реакция на край списка (упёрлись в границу при свайпе) ---- */
-@keyframes edge-bounce {
-  0% {
-    transform: translateX(0);
-  }
-
-  35% {
-    transform: translateX(-12px);
-  }
-
-  70% {
-    transform: translateX(6px);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.edge-bounce {
-  animation: edge-bounce 0.25s ease-out;
-}
-
-@keyframes edge-push-left {
-  0% {
-    transform: translateX(0);
-  }
-
-  45% {
-    transform: translateX(-14px);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes edge-push-right {
-  0% {
-    transform: translateX(0);
-  }
-
-  45% {
-    transform: translateX(14px);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.edge-push-left {
-  animation: edge-push-left 0.25s var(--ease-swipe);
-}
-
-.edge-push-right {
-  animation: edge-push-right 0.25s var(--ease-swipe);
-}
-
+/* ---- Реакция на край списка подпунктов (текст, не блок) ---- */
 @keyframes text-edge-push {
   0% {
     transform: translateX(0);

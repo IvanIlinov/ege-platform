@@ -15,7 +15,6 @@ export function TaskSlider({ task }: { task: Task }) {
     const [animationKey, setAnimationKey] = useState(0);
     const [revealedTasks, setRevealedTasks] = useState<Record<string, boolean>>({});
     const [edgeBounce, setEdgeBounce] = useState(false);
-    const [edgePush, setEdgePush] = useState<"left" | "right" | null>(null);
 
     const activeTask = task.tasks[activeIndex];
     const revealKey = `${task.id}-${activeIndex}`;
@@ -30,16 +29,10 @@ export function TaskSlider({ task }: { task: Task }) {
 
     function changeTask(index: number) {
         if (index < 0 || index >= task.tasks.length) {
-            // Уткнулись в край списка подпунктов — толкаем карточку
-            // в сторону "оттуда, откуда тянули", и гасим через 250мс.
+            // Край списка подпунктов: сдвигается только текст условия
+            // (.text-edge-push), карточка остаётся на месте.
             setEdgeBounce(true);
-            setEdgePush(index < 0 ? "right" : "left");
-
-            setTimeout(() => {
-                setEdgeBounce(false);
-                setEdgePush(null);
-            }, 250);
-
+            setTimeout(() => setEdgeBounce(false), 250);
             return;
         }
 
@@ -160,7 +153,6 @@ export function TaskSlider({ task }: { task: Task }) {
                         isRevealed={isRevealed}
                         onToggleReveal={toggleReveal}
                         edgeBounce={edgeBounce}
-                        edgePush={edgePush}
                     />
                 }
             />

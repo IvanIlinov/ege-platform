@@ -15,10 +15,13 @@ type ExpandingBubbleProps = {
 };
 
 /**
- * Пузырь, который разворачивается из точки в панель (spring-анимация
- * ширины/высоты/радиуса через framer-motion). Вынесен из TaskNav —
- * общий паттерн для FAB-меню, быстрых переключателей, всплывающих
- * панелей в любом будущем проекте на этом style-core.
+ * Пузырь, который разворачивается из точки в панель. Раскрытие —
+ * плавный tween по кривой --ease-swipe, без пружины: пружина
+ * (type: "spring") давала небольшой перехлёст по ширине/высоте —
+ * визуально это читалось как "эффект парашюта" на десктопе и как
+ * подпрыгивание на мобилке. Tween той же длительности, что и
+ * остальные переходы в проекте (0.25s), разворачивает панель
+ * ровно один раз, без отскока.
  */
 export function ExpandingBubble({
   isOpen,
@@ -38,12 +41,10 @@ export function ExpandingBubble({
         height: isOpen ? expandedHeight : collapsedSize,
         borderRadius: isOpen ? 24 : 999,
       }}
-      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className={`
   overflow-hidden
-  backdrop-blur-xl
-  transition-colors
-  ${isOpen ? "bg-white/5" : "bg-transparent"}
+  ${isOpen ? "bg-white/5 backdrop-blur-xl" : ""}
 `}
     >
       {!isOpen ? (
