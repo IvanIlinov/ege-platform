@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronRight, ChevronLeft, Eye } from "lucide-react";
 import { Task } from "../types/task";
 
@@ -10,6 +10,8 @@ export function TaskSlider({ task }: { task: Task }) {
     const [direction, setDirection] = useState<"left" | "right">("right");
     const [animationKey, setAnimationKey] = useState(0);
     const [revealedTasks, setRevealedTasks] = useState<Record<string, boolean>>({});
+    const [edgeBounce, setEdgeBounce] = useState(false);
+    const [edgePush, setEdgePush] = useState<"left" | "right" | null>(null);
 
     const [dragOffset, setDragOffset] = useState(0);
     const touchStartX = useRef(0);
@@ -22,8 +24,24 @@ export function TaskSlider({ task }: { task: Task }) {
     function toggleReveal() {
         setRevealedTasks((prev) => ({
             ...prev,
-            [revealKey]: !prev[revealKey],
+            [revealKey]: !(prev[revealKey] ?? false),
         }));
+    }
+
+    function changeTask(index: number) {
+        if (index < 0 || index >= task.tasks.length) {
+            setEdgeBounce(true);
+
+            setTimeout(() => {
+                setEdgeBounce(false);
+            }, 250);
+
+            return;
+        }
+
+        setDirection(index > activeIndex ? "left" : "right");
+        setAnimationKey((prev) => prev + 1);
+        setActiveIndex(index);
     }
 
     function handleTouchStart(e: React.TouchEvent) {
@@ -54,6 +72,50 @@ export function TaskSlider({ task }: { task: Task }) {
 
         setDragOffset(0);
     }
+
+    useEffect(() => {
+        function handleKeyDown(e: KeyboardEvent) {
+            const target = e.target as HTMLElement;
+
+            if (
+                target.tagName === "INPUT" ||
+                target.tagName === "TEXTAREA"
+            ) {
+                return;
+            }
+
+            if (e.key === "ArrowRight" && slide === "video") {
+                setSlide("practice");
+            }
+
+            if (e.key === "ArrowLeft" && slide === "practice") {
+                setSlide("video");
+            }
+
+            if (e.code === "Space" && slide === "practice") {
+                e.preventDefault();
+                toggleReveal();
+            }
+
+            if (slide === "practice") {
+                if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    changeTask(activeIndex + 1);
+                }
+
+                if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    changeTask(activeIndex - 1);
+                }
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [slide, activeIndex, revealKey]);
 
     return (
         <div className="relative rounded-3xl">
@@ -124,7 +186,16 @@ export function TaskSlider({ task }: { task: Task }) {
 
                     {/* Слайд 2: Практика */}
                     <div className="w-1/2 shrink-0 pl-2">
-                        <div className="glass-card p-4 md:p-6 min-h-[320px] flex flex-col">
+                        <div
+                            className={`
+                            glass-card
+                            p-4 md:p-6
+                            min-h-[320px]
+                            flex flex-col
+                            ${edgePush === "left" ? "edge-push-left" : ""}
+                            ${edgePush === "right" ? "edge-push-right" : ""}
+                        `}
+                        >
                             <div className="flex items-center gap-2 mb-4 flex-wrap">
                                 <div className="flex flex-wrap gap-1.5">
                                     {task.tasks.map((item, i) => {
@@ -134,19 +205,32 @@ export function TaskSlider({ task }: { task: Task }) {
                                                 key={item.id}
                                                 onClick={() => {
                                                     if (i === activeIndex) return;
-                                                    setDirection(i > activeIndex ? "left" : "right");
-                                                    setAnimationKey((prev) => prev + 1);
-                                                    setActiveIndex(i);
+                                                    changeTask(i);
                                                 }}
-                                                className={`h-8 w-8 rounded-full text-xs font-semibold border transition-colors ${isActive
-                                                    ? "border-[#4FC3F7] text-black"
-                                                    : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
-                                                    }`}
-                                                style={isActive ? {
-                                                    backgroundColor: "var(--signal)",
-                                                    borderColor: "var(--signal)",
-                                                    fontFamily: "var(--font-jetbrains-mono)"
-                                                } : { fontFamily: "var(--font-jetbrains-mono)" }}
+                                                className={`
+        focus-visible:outline-none
+        h-8 w-8
+        rounded-full
+        text-xs
+        font-semibold
+        border
+        transition-colors
+        ${isActive
+                                                        ? "border-[#4FC3F7] text-black"
+                                                        : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
+                                                    }
+    `}
+                                                style={
+                                                    isActive
+                                                        ? {
+                                                            backgroundColor: "var(--signal)",
+                                                            borderColor: "var(--signal)",
+                                                            fontFamily: "var(--font-jetbrains-mono)",
+                                                        }
+                                                        : {
+                                                            fontFamily: "var(--font-jetbrains-mono)",
+                                                        }
+                                                }
                                             >
                                                 {i + 1}
                                             </button>
@@ -157,14 +241,21 @@ export function TaskSlider({ task }: { task: Task }) {
 
                             <div
                                 key={animationKey}
-                                className={`flex-1 ${direction === "left" ? "animate-slide-left" : "animate-slide-right"}`}
+                                className={`
+                                        flex-1
+                                        ${direction === "left"
+                                        ? "animate-slide-left"
+                                        : "animate-slide-right"}
+                                    `}
                             >
-                                <p
-                                    className="text-white/85 leading-relaxed"
-                                    style={{ fontFamily: "var(--font-golos)" }}
-                                >
-                                    {activeTask.condition}
-                                </p>
+                                <div className={edgeBounce ? "text-edge-push" : ""}>
+                                    <p
+                                        className="text-white/85 leading-relaxed"
+                                        style={{ fontFamily: "var(--font-golos)" }}
+                                    >
+                                        {activeTask.condition}
+                                    </p>
+                                </div>
                             </div>
 
                             <div key={`${task.id}-${activeIndex}`} className="mt-4 flex items-center justify-center">

@@ -212,3 +212,98 @@ body::before {
   box-shadow: 0 0 10px 20px var(--signal);
   animation: pulse-dot 3.4s ease-in-out infinite;
 }
+
+/* TaskSlider */
+@keyframes edge-bounce {
+  0% {
+    transform: translateX(0);
+  }
+
+  35% {
+    transform: translateX(-12px);
+  }
+
+  70% {
+    transform: translateX(6px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.edge-bounce {
+  animation: edge-bounce 0.25s ease-out;
+}
+
+@keyframes edge-push {
+  0% {
+    transform: translateX(0);
+  }
+
+  40% {
+    transform: translateX(-12px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.edge-push {
+  animation: edge-push 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes edge-push-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(-14px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes edge-push-right {
+  0% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(14px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.edge-push-left {
+  animation: edge-push-left 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.edge-push-right {
+  animation: edge-push-right 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes text-edge-push {
+  0% {
+    transform: translateX(0);
+  }
+
+  40% {
+    transform: translateX(-12px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.text-edge-push {
+  animation: text-edge-push 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
