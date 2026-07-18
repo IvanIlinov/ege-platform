@@ -1,10 +1,12 @@
 import { Task } from "../types/task";
 import { TaskSlider } from "./TaskSlider";
+import { ExamPanel } from "@/shared/ui/ExamPanel";
+import { DigitStrip } from "@/shared/ui/DigitStrip";
 
 export function TaskPage({ task }: { task: Task }) {
   return (
     <div className="max-w-3xl mx-auto p-4">
-      <div className="exam-panel task-transition relative overflow-hidden rounded-[32px] p-5 md:p-8">
+      <ExamPanel className="task-transition p-5 md:p-8">
         {/* Заголовки */}
         <header className="relative flex items-start justify-between mb-6 gap-4">
           <div>
@@ -22,21 +24,12 @@ export function TaskPage({ task }: { task: Task }) {
             </h1>
           </div>
 
-          <div className="flex gap-1.5 shrink-0">
-            {String(task.id).padStart(2, "0").split("").map((digit, i) => (
-              <span
-                key={i}
-                className="digit-cell digit-cell--active w-9 h-11 text-lg font-semibold"
-                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-              >
-                {digit}
-              </span>
-            ))}
-          </div>
+          <DigitStrip value={task.id} length={2} />
         </header>
+
         {/* Основа */}
         <TaskSlider key={task.id} task={task} />
-      </div>
+      </ExamPanel>
       {/* Навигация была тут TaskNav*/}
     </div>
   );

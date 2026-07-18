@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, ListChecks, LayoutGrid } from "lucide-react";
+import { ListChecks } from "lucide-react";
 import { useTransitionNavigate } from "@/shared/components/PageTransition";
 
+// BookOpen, LayoutGrid — вернуть в links, когда появятся /lessons и /variants
 const links = [
-  //{ href: "/lessons", label: "Уроки", icon: BookOpen },
   { href: "/tasks", label: "Задания", icon: ListChecks },
-  //{ href: "/variants", label: "Варианты", icon: LayoutGrid },
 ];
 
 export function BottomNav() {
