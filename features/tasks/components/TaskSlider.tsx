@@ -16,6 +16,7 @@ export function TaskSlider({ task }: { task: Task }) {
     const [dragOffset, setDragOffset] = useState(0);
     const touchStartX = useRef(0);
     const isDragging = useRef(false);
+    const touchDelta = useRef(0);
 
     const activeTask = task.tasks[activeIndex];
     const revealKey = `${task.id}-${activeIndex}`;
@@ -51,25 +52,45 @@ export function TaskSlider({ task }: { task: Task }) {
 
     function handleTouchMove(e: React.TouchEvent) {
         if (!isDragging.current) return;
+
         const delta = e.touches[0].clientX - touchStartX.current;
 
-        // Не тянем за границы
-        if (slide === "video" && delta > 0) return;
-        if (slide === "practice" && delta < 0) return;
+        touchDelta.current = delta;
 
-        setDragOffset(delta);
+        if (slide === "video") {
+            if (delta > 0) return;
+
+            setDragOffset(delta);
+        }
     }
 
     function handleTouchEnd() {
         isDragging.current = false;
+
+        const delta = touchDelta.current;
         const THRESHOLD = 50;
 
-        if (dragOffset < -THRESHOLD && slide === "video") {
-            setSlide("practice");
-        } else if (dragOffset > THRESHOLD && slide === "practice") {
-            setSlide("video");
+        if (slide === "video") {
+            if (delta < -THRESHOLD) {
+                setSlide("practice");
+            }
         }
 
+        if (slide === "practice") {
+            if (delta < -THRESHOLD) {
+                changeTask(activeIndex + 1);
+            }
+
+            if (delta > THRESHOLD) {
+                if (activeIndex === 0) {
+                    setSlide("video");
+                } else {
+                    changeTask(activeIndex - 1);
+                }
+            }
+        }
+
+        touchDelta.current = 0;
         setDragOffset(0);
     }
 
